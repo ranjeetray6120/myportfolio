@@ -1,104 +1,152 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Mail, MapPin, Github, Send } from 'lucide-react';
+"use client";
+
+import React, { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { Mail, MapPin, Github, Send, Linkedin } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 const Contact = () => {
+    const containerRef = useRef(null);
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ["start end", "end start"]
+    });
+
+    const x1 = useTransform(scrollYProgress, [0, 1], [-50, 0]);
+    const x2 = useTransform(scrollYProgress, [0, 1], [50, 0]);
+
     return (
-        <section id="contact" className="py-20 bg-slate-800/50">
-            <div className="container mx-auto px-4">
-                <div className="text-center mb-16">
-                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Get In Touch</h2>
-                    <div className="w-20 h-1 bg-blue-500 mx-auto rounded-full"></div>
-                </div>
+        <section id="contact" className="py-24 relative overflow-hidden" ref={containerRef}>
+            <div className="container mx-auto px-4 relative z-10">
+                <div className="max-w-6xl mx-auto">
+                    <div className="flex flex-col lg:flex-row gap-16 lg:gap-24">
 
-                <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-12">
-                    <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                    >
-                        <h3 className="text-2xl font-bold text-white mb-6">Let's Connect</h3>
-                        <p className="text-gray-400 mb-8">
-                            I’m active and looking for internships and full-time opportunities in backend development, full stack development, Spring Boot, and Java development roles.
-                        </p>
-
-                        <div className="space-y-6">
-                            <div className="flex items-center gap-4 text-gray-300">
-                                <div className="p-3 bg-slate-900 rounded-lg text-blue-500">
-                                    <Mail size={24} />
-                                </div>
-                                <div>
-                                    <p className="text-sm text-gray-500">Email</p>
-                                    <a href="mailto:your-email@example.com" className="hover:text-blue-400 transition-colors">ranjeetkuarroya23@gmail.com.com</a>
-                                </div>
-                            </div>
-
-                            <div className="flex items-center gap-4 text-gray-300">
-                                <div className="p-3 bg-slate-900 rounded-lg text-blue-500">
-                                    <Github size={24} />
-                                </div>
-                                <div>
-                                    <p className="text-sm text-gray-500">GitHub</p>
-                                    <a href="https://github.com/ranjeetray6120" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 transition-colors">@ranjeetray6120</a>
-                                </div>
-                            </div>
-
-                            <div className="flex items-center gap-4 text-gray-300">
-                                <div className="p-3 bg-slate-900 rounded-lg text-blue-500">
-                                    <MapPin size={24} />
-                                </div>
-                                <div>
-                                    <p className="text-sm text-gray-500">Location</p>
-                                    <p>Bihar, India</p>
-                                </div>
-                            </div>
-                        </div>
-                    </motion.div>
-
-                    <motion.div
-                        initial={{ opacity: 0, x: 20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        className="bg-slate-900 p-8 rounded-2xl border border-slate-700"
-                    >
-                        <form className="space-y-6">
+                        {/* Info Side */}
+                        <motion.div
+                            style={{ x: x1 }}
+                            initial={{ opacity: 0 }}
+                            whileInView={{ opacity: 1 }}
+                            viewport={{ once: true }}
+                            className="lg:w-1/2 space-y-12"
+                        >
                             <div>
-                                <label className="block text-sm font-medium text-gray-400 mb-2">Name</label>
-                                <input
-                                    type="text"
-                                    className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg focus:outline-none focus:border-blue-500 text-white placeholder-gray-500"
-                                    placeholder="Your Name"
+                                <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
+                                    Let's build <br />
+                                    <span className="text-white/40">something exceptional</span>
+                                </h2>
+                                <p className="text-lg text-white/50 font-light leading-relaxed max-w-md">
+                                    Currently open to internships and full-time opportunities in Backend and Full Stack roles.
+                                    I love talking about Java, Spring Boot, and modern web architectures.
+                                </p>
+                            </div>
+
+                            <div className="space-y-8">
+                                <ContactItem
+                                    icon={<Mail className="text-primary" size={20} />}
+                                    label="Email"
+                                    value="ranjeetkumarroya23@gmail.com"
+                                    href="mailto:ranjeetkumarroya23@gmail.com"
+                                />
+                                <ContactItem
+                                    icon={<Github className="text-accent" size={20} />}
+                                    label="GitHub"
+                                    value="@ranjeetray6120"
+                                    href="https://github.com/ranjeetray6120"
+                                />
+                                <ContactItem
+                                    icon={<MapPin className="text-secondary" size={20} />}
+                                    label="Location"
+                                    value="Bihar, India"
                                 />
                             </div>
-                            <div>
-                                <label className="block text-sm font-medium text-gray-400 mb-2">Email</label>
-                                <input
-                                    type="email"
-                                    className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg focus:outline-none focus:border-blue-500 text-white placeholder-gray-500"
-                                    placeholder="your@email.com"
-                                />
+
+                            <div className="flex gap-4 pt-4">
+                                <SocialButton icon={<Linkedin size={20} />} href="#" />
+                                <SocialButton icon={<Github size={20} />} href="https://github.com/ranjeetray6120" />
                             </div>
-                            <div>
-                                <label className="block text-sm font-medium text-gray-400 mb-2">Message</label>
-                                <textarea
-                                    rows="4"
-                                    className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg focus:outline-none focus:border-blue-500 text-white placeholder-gray-500"
-                                    placeholder="Your message..."
-                                ></textarea>
+                        </motion.div>
+
+                        {/* Form Side */}
+                        <motion.div
+                            style={{ x: x2 }}
+                            initial={{ opacity: 0 }}
+                            whileInView={{ opacity: 1 }}
+                            viewport={{ once: true }}
+                            className="lg:w-1/2"
+                        >
+                            <div className="glass-dark rounded-[2.5rem] p-8 md:p-12 border border-white/5 shadow-2xl relative">
+                                <div className="absolute -top-10 -right-10 w-40 h-40 bg-primary/10 rounded-full blur-3xl -z-10" />
+
+                                <form className="space-y-8">
+                                    <div className="grid md:grid-cols-2 gap-8">
+                                        <div className="space-y-2">
+                                            <label className="text-[10px] uppercase tracking-widest font-bold text-white/40 ml-4">Full Name</label>
+                                            <input
+                                                type="text"
+                                                className="w-full px-6 py-4 bg-white/5 border border-white/5 rounded-2xl focus:outline-none focus:border-white/20 text-white placeholder-white/20 transition-all"
+                                                placeholder="John Doe"
+                                            />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <label className="text-[10px] uppercase tracking-widest font-bold text-white/40 ml-4">Email Address</label>
+                                            <input
+                                                type="email"
+                                                className="w-full px-6 py-4 bg-white/5 border border-white/5 rounded-2xl focus:outline-none focus:border-white/20 text-white placeholder-white/20 transition-all"
+                                                placeholder="john@example.com"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-[10px] uppercase tracking-widest font-bold text-white/40 ml-4">Your Message</label>
+                                        <textarea
+                                            rows="5"
+                                            className="w-full px-6 py-4 bg-white/5 border border-white/5 rounded-2xl focus:outline-none focus:border-white/20 text-white placeholder-white/20 transition-all resize-none"
+                                            placeholder="Tell me about your project..."
+                                        ></textarea>
+                                    </div>
+                                    <motion.button
+                                        whileHover={{ scale: 1.02 }}
+                                        whileTap={{ scale: 0.98 }}
+                                        type="submit"
+                                        className="w-full py-5 bg-primary text-black rounded-2xl font-bold flex items-center justify-center gap-3 hover:opacity-90 transition-all shadow-xl shadow-primary/10"
+                                    >
+                                        <Send size={18} />
+                                        Send Message
+                                    </motion.button>
+                                </form>
                             </div>
-                            <button
-                                type="submit"
-                                className="w-full py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
-                            >
-                                <Send size={18} />
-                                Send Message
-                            </button>
-                        </form>
-                    </motion.div>
+                        </motion.div>
+                    </div>
                 </div>
             </div>
         </section>
     );
 };
+
+const ContactItem = ({ icon, label, value, href }) => (
+    <div className="flex items-center gap-6 group">
+        <div className="w-12 h-12 rounded-2xl glass-dark border border-white/5 flex items-center justify-center group-hover:bg-white/10 transition-all">
+            {icon}
+        </div>
+        <div>
+            <p className="text-[10px] uppercase tracking-widest font-bold text-white/20 mb-1">{label}</p>
+            {href ? (
+                <a href={href} className="text-white font-medium hover:text-primary transition-colors">{value}</a>
+            ) : (
+                <p className="text-white font-medium">{value}</p>
+            )}
+        </div>
+    </div>
+);
+
+const SocialButton = ({ icon, href }) => (
+    <a
+        href={href}
+        target="_blank"
+        className="w-12 h-12 rounded-2xl glass-dark border border-white/5 flex items-center justify-center text-white/40 hover:text-white hover:bg-white/10 transition-all"
+    >
+        {icon}
+    </a>
+);
 
 export default Contact;

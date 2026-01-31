@@ -1,127 +1,130 @@
+"use client";
+
 import React from 'react';
-import { motion } from 'framer-motion';
-import { Briefcase, Calendar } from 'lucide-react';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { Briefcase, GraduationCap, ChevronRight } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 const Experience = () => {
     return (
-        <section id="experience" className="py-20">
-            <div className="container mx-auto px-4">
-                <div className="text-center mb-16">
-                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Experience & Education</h2>
-                    <div className="w-20 h-1 bg-blue-500 mx-auto rounded-full"></div>
+        <section id="experience" className="py-24 relative overflow-hidden">
+            <div className="container mx-auto px-4 relative z-10">
+                <div className="text-center mb-20">
+                    <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Experience & Education</h2>
+                    <div className="w-20 h-1.5 bg-gradient-to-r from-primary to-accent mx-auto rounded-full"></div>
                 </div>
 
-                <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-12">
-
+                <div className="max-w-5xl mx-auto grid lg:grid-cols-2 gap-16">
                     {/* Experience Column */}
-                    <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                    >
-                        <div className="flex items-center gap-3 mb-8">
-                            <Briefcase className="text-blue-500" size={24} />
-                            <h3 className="text-2xl font-bold text-white">Work Experience</h3>
+                    <div className="space-y-12">
+                        <div className="flex items-center gap-4 mb-10">
+                            <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center">
+                                <Briefcase className="text-primary" size={24} />
+                            </div>
+                            <h3 className="text-2xl font-bold text-white tracking-tight">Work Experience</h3>
                         </div>
 
-                        <div className="relative pl-8 border-l-2 border-slate-700 space-y-12">
-
-                            {/* Chandra Realtors */}
-                            <div className="relative">
-                                <div className="absolute -left-[41px] top-0 w-5 h-5 rounded-full bg-blue-500 border-4 border-slate-900"></div>
-
-                                <h4 className="text-xl font-bold text-white">Full Stack Developer</h4>
-                                <p className="text-blue-400 mb-2">Chandra Realtors</p>
-                                <p className="text-gray-400 text-sm mb-4">Web apps, mobile apps and DevOps</p>
-
-                                <ul className="space-y-2 text-gray-300">
-                                    <li>• Working on internal CRM systems and backend modules.</li>
-                                    <li>• Building Android and iOS apps used for sales and property management.</li>
-                                    <li>• Contributing to deployments and DevOps automation.</li>
-                                </ul>
-                            </div>
-
-                            {/* MereHisaab app */}
-                            <div className="relative">
-                                <div className="absolute -left-[41px] top-0 w-5 h-5 rounded-full bg-blue-500 border-4 border-slate-900"></div>
-
-                                <h4 className="text-xl font-bold text-white">Android App Debugging</h4>
-                                <p className="text-blue-400 mb-2">MereHisaab App</p>
-                                <p className="text-gray-400 text-sm mb-4">React Native app debugging</p>
-
-                                <ul className="space-y-2 text-gray-300">
-                                    <li>• Debugged build issues and fixed release configuration.</li>
-                                    <li>• Resolved Android crashes, signature conflicts and deployment errors.</li>
-                                    <li>• Optimized performance during production releases.</li>
-                                </ul>
-                            </div>
-
+                        <div className="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-primary/50 before:via-white/5 before:to-transparent">
+                            <ExperienceItem
+                                title="Full Stack Developer"
+                                company="Chandra Realtors"
+                                period="2025 - Present"
+                                description="Leading full-stack development. Working on internal CRM systems, mobile apps, and DevOps automation."
+                                icon={<div className="w-3 h-3 rounded-full bg-primary border-4 border-black" />}
+                            />
+                            <ExperienceItem
+                                title="App Debugging"
+                                company="MereHisaab App"
+                                period="2024"
+                                description="Resolved critical build issues, optimized performance, and handled production releases for React Native apps."
+                                icon={<div className="w-3 h-3 rounded-full bg-white/20 border-4 border-black" />}
+                            />
                         </div>
-                    </motion.div>
+                    </div>
 
                     {/* Education Column */}
-                    <motion.div
-                        initial={{ opacity: 0, x: 20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                    >
-                        <div className="flex items-center gap-3 mb-8">
-                            <Calendar className="text-emerald-500" size={24} />
-                            <h3 className="text-2xl font-bold text-white">Education</h3>
+                    <div className="space-y-12">
+                        <div className="flex items-center gap-4 mb-10">
+                            <div className="w-12 h-12 rounded-2xl bg-accent/10 flex items-center justify-center">
+                                <GraduationCap className="text-accent" size={24} />
+                            </div>
+                            <h3 className="text-2xl font-bold text-white tracking-tight">Education</h3>
                         </div>
 
-                        <div className="relative pl-8 border-l-2 border-slate-700 space-y-12">
-
-                            {/* B.Tech */}
-                            <div className="relative">
-                                <div className="absolute -left-[41px] top-0 w-5 h-5 rounded-full bg-emerald-500 border-4 border-slate-900"></div>
-
-                                <h4 className="text-xl font-semibold text-white">B.Tech in Computer Science Engineering</h4>
-                                <p className="text-emerald-400 mb-2">Baba Banda Singh Bahadur Engineering College</p>
-                                <div className="inline-block px-3 py-1 bg-slate-800 rounded-full text-xs text-gray-400 mb-4">
-                                    2021 – 2025
-                                </div>
-
-                                <p className="text-gray-300">
-                                    Completed B.Tech specializing in software development and modern backend technologies.
-                                </p>
-                            </div>
-
-                            {/* 12th */}
-                            <div className="relative">
-                                <div className="absolute -left-[41px] top-0 w-5 h-5 rounded-full bg-emerald-500 border-4 border-slate-900"></div>
-
-                                <h4 className="text-xl font-semibold text-white">Senior Secondary Education (12th)</h4>
-                                <p className="text-emerald-400 mb-2">Bihar School Examination Board</p>
-                                <div className="inline-block px-3 py-1 bg-slate-800 rounded-full text-xs text-gray-400 mb-4">
-                                    2018 – 2020
-                                </div>
-
-                                <p className="text-gray-300">
-                                    Completed senior secondary education with interest in computer science and mathematics.
-                                </p>
-                            </div>
-
-                            {/* 10th */}
-                            <div className="relative">
-                                <div className="absolute -left-[41px] top-0 w-5 h-5 rounded-full bg-emerald-500 border-4 border-slate-900"></div>
-
-                                <h4 className="text-xl font-semibold text-white">Secondary Education (10th)</h4>
-                                <p className="text-emerald-400 mb-2">Bihar School Examination Board</p>
-                                <div className="inline-block px-3 py-1 bg-slate-800 rounded-full text-xs text-gray-400 mb-4">
-                                    2017 – 2018
-                                </div>
-
-                                <p className="text-gray-300">
-                                    Built strong fundamentals and interest in technology during school years.
-                                </p>
-                            </div>
-
+                        <div className="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-accent/50 before:via-white/5 before:to-transparent">
+                            <ExperienceItem
+                                title="B.Tech in CSE"
+                                company="Baba Banda Singh Bahadur Engineering College"
+                                period="2021 - 2025"
+                                description="Specialized in software development and modern backend architectures."
+                                icon={<div className="w-3 h-3 rounded-full bg-accent border-4 border-black" />}
+                            />
+                            <ExperienceItem
+                                title="Senior Secondary"
+                                company="BSEB Bihar"
+                                period="2018 - 2020"
+                                description="Deep interest in mathematics and computer science fundamentals."
+                                icon={<div className="w-3 h-3 rounded-full bg-white/20 border-4 border-black" />}
+                            />
                         </div>
-                    </motion.div>
+                    </div>
                 </div>
             </div>
         </section>
+    );
+};
+
+const ExperienceItem = ({ title, company, period, description, icon }) => {
+    const x = useMotionValue(0);
+    const y = useMotionValue(0);
+
+    const mouseX = useSpring(x, { stiffness: 500, damping: 100 });
+    const mouseY = useSpring(y, { stiffness: 500, damping: 100 });
+
+    const rotateX = useTransform(mouseY, [-0.5, 0.5], ["10deg", "-10deg"]);
+    const rotateY = useTransform(mouseX, [-0.5, 0.5], ["-10deg", "10deg"]);
+
+    function handleMouseMove({ currentTarget, clientX, clientY }) {
+        const { left, top, width, height } = currentTarget.getBoundingClientRect();
+        x.set((clientX - left) / width - 0.5);
+        y.set((clientY - top) / height - 0.5);
+    }
+
+    function handleMouseLeave() {
+        x.set(0);
+        y.set(0);
+    }
+
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active perspective-1000"
+        >
+            <div className="flex items-center justify-center w-10 h-10 rounded-full border border-white/10 glass-dark text-slate-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-colors group-hover:border-white/20">
+                {icon}
+            </div>
+
+            <motion.div
+                style={{ perspective: 1000 }}
+                className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] relative"
+                onMouseMove={handleMouseMove}
+                onMouseLeave={handleMouseLeave}
+            >
+                <motion.div
+                    style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+                    className="p-6 rounded-3xl glass-dark border border-white/5 transition-all group-hover:border-white/10 group-hover:bg-white/[0.07] hover:shadow-[0_0_30px_-10px_rgba(255,255,255,0.05)]"
+                >
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4 transform-style-3d" style={{ transform: "translateZ(20px)" }}>
+                        <div className="font-bold text-white text-lg">{title}</div>
+                        <time className="text-xs font-medium text-white/30 uppercase tracking-widest">{period}</time>
+                    </div>
+                    <div className="text-primary/80 font-medium text-sm mb-4 transform-style-3d" style={{ transform: "translateZ(10px)" }}>{company}</div>
+                    <div className="text-white/50 text-sm leading-relaxed font-light transform-style-3d" style={{ transform: "translateZ(5px)" }}>{description}</div>
+                </motion.div>
+            </motion.div>
+        </motion.div>
     );
 };
 
